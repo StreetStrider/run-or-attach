@@ -15,7 +15,9 @@ module.exports = function (sockpath, workerfn)
 	{
 		if (e.code === 'ENOENT')
 		{
-			console.info('run')
+			var create = require('./create')
+
+			create(sockpath, workerfn)
 		}
 		else
 		{
