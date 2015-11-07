@@ -2,28 +2,20 @@
 
 var check = require('./check')
 
-module.exports = function (sockpath, workerfn)
+// workerfn
+module.exports = function (sockpath, callback)
 {
-	/*try
+	check(sockpath, function (error, socket)
 	{
-		var up = access(sockpath, fs.R_OK | fs.W_OK)
-
-		console.info('attach')
-	}
-	catch (e)
-	{
-		if (e.code === 'ENOENT')
+		if (error)
 		{
 			var create = require('./create')
 
-			console.info('create')
-			create(sockpath, workerfn)
+			create(sockpath, console.warn)
 		}
 		else
 		{
-			throw e
+			callback(socket)
 		}
-	}*/
-
-	check(sockpath, console.info.part('check'))
+	})
 }
