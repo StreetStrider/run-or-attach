@@ -9,7 +9,9 @@ attach('/tmp/sock', function (error, socket)
 
 	if (socket)
 	{
-		socket.write(JSON.stringify({ x: 1 }))
+		var next = require('./src/util/next-id')()
+
+		socket.write(JSON.stringify({ x: Math.random(), id: next() }))
 		socket.on('data', function (data)
 		{
 			console.log('recv')
