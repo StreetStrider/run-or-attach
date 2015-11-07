@@ -32,7 +32,7 @@ module.exports = function (sockpath, callback)
 			{
 				clearTimeout(timeout)
 
-				var e = new Error
+				var e = new Error('connect NOT_YUP')
 				e.code = 'NOT_YUP'
 
 				callback(e)
