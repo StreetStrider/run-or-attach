@@ -9,10 +9,19 @@ module.exports = function (sockpath, callback)
 	{
 		if (error)
 		{
-			var create = require('./create')
+			if (error.code === 'ENOENT')
+			{
+				var create = require('./create')
 
-			console.dir(error)
-			//create(sockpath, console.warn)
+				create(sockpath, function ()
+				{
+					console.log('connect here')
+				})
+			}
+			else
+			{
+				callback(error)
+			}
 		}
 		else
 		{
