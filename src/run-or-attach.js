@@ -16,16 +16,17 @@ module.exports = function (sockpath, callback)
 				create(sockpath, function ()
 				{
 					console.log('connect here')
+					return callback(null, 'socket here')
 				})
 			}
 			else
 			{
-				callback(error)
+				return callback(error)
 			}
 		}
 		else
 		{
-			callback(socket)
+			return callback(null, socket)
 		}
 	})
 }

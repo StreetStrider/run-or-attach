@@ -36,6 +36,6 @@ module.exports = function (sockpath, callback)
 			rm(sockpath)
 		}
 
-		callback()
+		return callback()
 	})
 }

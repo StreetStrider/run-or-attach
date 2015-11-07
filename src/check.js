@@ -18,11 +18,11 @@ module.exports = function (sockpath, callback)
 				if (data === 'yup!\n')
 				{
 					clearTimeout(timeout)
-					callback()
+					return callback(null, socket)
 				}
 				else
 				{
-					notYup()
+					return notYup()
 				}
 			})
 
@@ -32,12 +32,12 @@ module.exports = function (sockpath, callback)
 			{
 				clearTimeout(timeout)
 
-				var e = new Error('connect NOT_YUP')
-				e.code = 'NOT_YUP'
+				var error = new Error('connect NOT_YUP')
+				error.code = 'NOT_YUP'
 
 				socket.end()
 
-				callback(e)
+				return callback(error)
 			}
 
 			socket.write('alive?\n')
@@ -45,8 +45,8 @@ module.exports = function (sockpath, callback)
 
 		socket.on('error', callback)
 	}
-	catch (e)
+	catch (error)
 	{
-		callback(e)
+		return callback(error)
 	}
 }
