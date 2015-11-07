@@ -17,16 +17,26 @@ module.exports = function (sockpath, callback)
 			{
 				if (data === 'yup!\n')
 				{
+					clearTimeout(timeout)
 					callback()
 				}
 				else
 				{
-					var e = new Error
-					e.code = 'NOT_YUP'
-
-					callback(e)
+					notYup()
 				}
 			})
+
+			var timeout = setTimeout(notYup, 3000)
+
+			function notYup ()
+			{
+				clearTimeout(timeout)
+
+				var e = new Error
+				e.code = 'NOT_YUP'
+
+				callback(e)
+			}
 
 			socket.write('alive?\n')
 		})
