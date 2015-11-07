@@ -1,6 +1,7 @@
 
 
 var check = require('./check')
+var attach = require('./attach')
 
 // workerfn
 module.exports = function (sockpath, callback)
@@ -15,8 +16,7 @@ module.exports = function (sockpath, callback)
 
 				run(sockpath, function ()
 				{
-					console.log('connect here')
-					return callback(null, 'socket here')
+					return attach(sockpath, callback)
 				})
 			}
 			else
@@ -26,7 +26,7 @@ module.exports = function (sockpath, callback)
 		}
 		else
 		{
-			return callback(null, 'socket here')
+			return attach(sockpath, callback)
 		}
 	})
 }
