@@ -1,5 +1,6 @@
 
 var server = require('net').createServer
+var rm = require('fs').unlinkSync
 
 module.exports = function (sockpath)
 {
@@ -14,4 +15,14 @@ module.exports = function (sockpath)
 			console.log(arguments)
 		})
 	})
+
+	process.on('exit', teardown)
+	// process.on('SIGINT', teardown)
+	process.on('SIGINT', process.exit)
+
+	function teardown (args)
+	{
+		console.info('teardown')
+		rm(sockpath)
+	}
 }
