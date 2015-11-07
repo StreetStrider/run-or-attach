@@ -11,9 +11,9 @@ module.exports = function (sockpath, callback)
 		{
 			if (error.code === 'ENOENT')
 			{
-				var create = require('./create')
+				var run = require('./run')
 
-				create(sockpath, function ()
+				run(sockpath, function ()
 				{
 					console.log('connect here')
 					return callback(null, 'socket here')
