@@ -1,11 +1,10 @@
 
 
-var fs = require('fs')
-var access = fs.accessSync
+var check = require('./check')
 
 module.exports = function (sockpath, workerfn)
 {
-	try
+	/*try
 	{
 		var up = access(sockpath, fs.R_OK | fs.W_OK)
 
@@ -24,7 +23,7 @@ module.exports = function (sockpath, workerfn)
 		{
 			throw e
 		}
-	}
+	}*/
 
-	console.info('up')
+	check(sockpath, console.info.part('check'))
 }
