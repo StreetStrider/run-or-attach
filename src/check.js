@@ -35,6 +35,8 @@ module.exports = function (sockpath, callback)
 				var e = new Error('connect NOT_YUP')
 				e.code = 'NOT_YUP'
 
+				socket.end()
+
 				callback(e)
 			}
 
