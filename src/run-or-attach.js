@@ -5,7 +5,7 @@ var check = require('./check')
 // workerfn
 module.exports = function (sockpath, callback)
 {
-	check(sockpath, function (error, socket)
+	check(sockpath, function (error)
 	{
 		if (error)
 		{
@@ -26,7 +26,7 @@ module.exports = function (sockpath, callback)
 		}
 		else
 		{
-			return callback(null, socket)
+			return callback(null, 'socket here')
 		}
 	})
 }

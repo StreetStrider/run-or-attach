@@ -18,7 +18,10 @@ module.exports = function (sockpath, callback)
 				if (data === 'yup!\n')
 				{
 					clearTimeout(timeout)
-					return callback(null, socket)
+
+					socket.end()
+
+					return callback()
 				}
 				else
 				{
