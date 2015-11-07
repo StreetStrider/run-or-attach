@@ -21,15 +21,21 @@ module.exports = function (sockpath, callback)
 			}
 		})
 	})
-	.listen(sockpath, callback)
-
-	// process.on('SIGINT', teardown)
-	process.on('SIGINT', process.exit)
-	process.on('exit', teardown)
-
-	function teardown (args)
+	.listen(sockpath)
+	.on('listening', function (error)
 	{
-		console.info('teardown')
-		rm(sockpath)
-	}
+		if (error) return callback(error)
+
+		// process.on('SIGINT', teardown)
+		process.on('SIGINT', process.exit)
+		process.on('exit', teardown)
+
+		function teardown (args)
+		{
+			console.info('teardown')
+			rm(sockpath)
+		}
+
+		callback()
+	})
 }
