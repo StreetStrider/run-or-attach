@@ -2,5 +2,10 @@
 	"name": "run-or-attach",
 	"version": "0.0.0",
 
-	"main": "src/run-or-attach"
+	"main": "src/run-or-attach",
+
+	"devDependencies":
+	{
+		"console-ultimate": "^2.8.0"
+	}
 }
