@@ -2,10 +2,9 @@
 var server = require('net').createServer
 var rm = require('fs').unlinkSync
 
-module.exports = function (sockpath)
+module.exports = function (sockpath, callback)
 {
 	server()
-	.listen(sockpath)
 	.on('connection', function (socket)
 	{
 		socket.setEncoding('utf-8')
@@ -22,10 +21,11 @@ module.exports = function (sockpath)
 			}
 		})
 	})
+	.listen(sockpath, callback)
 
-	process.on('exit', teardown)
 	// process.on('SIGINT', teardown)
 	process.on('SIGINT', process.exit)
+	process.on('exit', teardown)
 
 	function teardown (args)
 	{
