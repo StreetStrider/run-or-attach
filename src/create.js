@@ -10,9 +10,16 @@ module.exports = function (sockpath)
 	{
 		socket.setEncoding('utf-8')
 
-		socket.on('data', function ()
+		socket.on('data', function (data)
 		{
-			console.log(arguments)
+			if (data === 'alive?\n')
+			{
+				socket.write('yup!\n')
+			}
+			else
+			{
+				// pass to next handler
+			}
 		})
 	})
 
