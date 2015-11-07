@@ -7,10 +7,7 @@ module.exports = function (sockpath, callback)
 	{
 		socket.setEncoding('utf-8')
 
-		socket.on('data', function (data)
-		{
-			// 
-		})
+		// socket.on('data', {})
 
 		return callback(null, socket)
 	})

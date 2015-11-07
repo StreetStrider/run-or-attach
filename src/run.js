@@ -17,6 +17,11 @@ module.exports = function (sockpath, callback)
 			}
 			else
 			{
+				data = JSON.parse(data)
+
+				data.x += 1
+
+				socket.write(JSON.stringify(data))
 				// pass to next handler
 			}
 		})
