@@ -7,6 +7,11 @@ module.exports = function (sockpath)
 	.listen(sockpath)
 	.on('connection', function (socket)
 	{
-		console.log(socket)
+		socket.setEncoding('utf-8')
+
+		socket.on('data', function ()
+		{
+			console.log(arguments)
+		})
 	})
 }

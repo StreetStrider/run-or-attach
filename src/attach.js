@@ -17,6 +17,7 @@ module.exports = function (sockpath, workerfn)
 		{
 			var create = require('./create')
 
+			console.info('create')
 			create(sockpath, workerfn)
 		}
 		else
@@ -25,5 +26,5 @@ module.exports = function (sockpath, workerfn)
 		}
 	}
 
-	console.log('up')
+	console.info('up')
 }
