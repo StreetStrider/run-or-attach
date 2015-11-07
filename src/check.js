@@ -40,6 +40,8 @@ module.exports = function (sockpath, callback)
 
 			socket.write('alive?\n')
 		})
+
+		socket.on('error', callback)
 	}
 	catch (e)
 	{

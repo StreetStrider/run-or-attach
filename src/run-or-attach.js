@@ -11,7 +11,8 @@ module.exports = function (sockpath, callback)
 		{
 			var create = require('./create')
 
-			create(sockpath, console.warn)
+			console.dir(error)
+			//create(sockpath, console.warn)
 		}
 		else
 		{
