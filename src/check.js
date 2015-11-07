@@ -15,12 +15,20 @@ module.exports = function (sockpath, callback)
 
 			socket.on('data', function (data)
 			{
-				console.log(data)
+				if (data === 'yup!\n')
+				{
+					callback()
+				}
+				else
+				{
+					var e = new Error
+					e.code = 'NOT_YUP'
+
+					callback(e)
+				}
 			})
 
 			socket.write('alive?\n')
-
-			callback()
 		})
 	}
 	catch (e)
