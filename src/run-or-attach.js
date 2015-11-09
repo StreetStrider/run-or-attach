@@ -14,19 +14,25 @@ module.exports = function (sockpath, callback)
 			{
 				var daemon = require('./util/daemon')
 
-				daemon()
+				var child = daemon()
 
-				var run = require('./run')
-
-				/*if (daemon.is())
+				if (daemon.is())
 				{
-					return callback()
-				}*/
+					var run = require('./run')
+					callback = null
 
-				run(sockpath, function ()
+					run(sockpath)
+				}
+				else
 				{
-					return attach(sockpath, callback)
-				})
+					child.on('message', function (data)
+					{
+						if (data === 'RUN_OR_ATTACH_READY')
+						{
+							return attach(sockpath, callback)
+						}
+					})
+				}
 			}
 			else
 			{

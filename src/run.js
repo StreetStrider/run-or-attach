@@ -3,11 +3,11 @@ var daemon = require('./util/daemon')
 var server = require('net').createServer
 var rm = require('fs').unlinkSync
 
-module.exports = function (sockpath, callback)
+module.exports = function (sockpath)
 {
 	if (! daemon.is())
 	{
-		return callback()
+		return
 	}
 
 	server()
@@ -35,7 +35,7 @@ module.exports = function (sockpath, callback)
 	.listen(sockpath)
 	.on('listening', function (error)
 	{
-		if (error) return callback(error)
+		if (error) return
 
 		// process.on('SIGINT', teardown)
 		process.on('SIGINT', process.exit)
@@ -47,6 +47,6 @@ module.exports = function (sockpath, callback)
 			rm(sockpath)
 		}
 
-		return callback()
+		process.send('RUN_OR_ATTACH_READY')
 	})
 }

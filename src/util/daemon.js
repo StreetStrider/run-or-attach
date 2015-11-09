@@ -1,9 +1,9 @@
 
 var spawn = require('child_process').spawn
+var fork = require('child_process').fork
 
 var daemon = module.exports = function ()
 {
-
 	var args = process.argv.slice(1)
 
 	var opts =
@@ -17,7 +17,7 @@ var daemon = module.exports = function ()
 		}
 	}
 
-	var child = spawn(process.execPath, args, opts)
+	var child = fork(args[0], args.slice(1), opts)
 
 	child.unref()
 

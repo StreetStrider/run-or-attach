@@ -7,9 +7,11 @@ var daemon = require('./src/util/daemon')
 
 attach('/tmp/sock', function (error, socket)
 {
-	console.info('test', error, !! socket)
-
-	if (socket)
+	if (error)
+	{
+		console.error(error)
+	}
+	else
 	{
 		var next = require('./src/util/next-id')()
 
