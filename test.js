@@ -3,6 +3,8 @@ require('console-ultimate/global').replace()
 
 var attach = require('./src/run-or-attach')
 
+var daemon = require('./src/util/daemon')
+
 attach('/tmp/sock', function (error, socket)
 {
 	console.info('test', error, !! socket)
@@ -14,8 +16,8 @@ attach('/tmp/sock', function (error, socket)
 		socket.write(JSON.stringify({ x: Math.random(), id: next() }))
 		socket.on('data', function (data)
 		{
-			console.log('recv')
 			console.dir(data)
+			console.info('daemon: %s', daemon.is())
 		})
 	}
 })

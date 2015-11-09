@@ -12,7 +12,16 @@ module.exports = function (sockpath, callback)
 		{
 			if (error.code === 'ENOENT')
 			{
+				var daemon = require('./util/daemon')
+
+				daemon()
+
 				var run = require('./run')
+
+				/*if (daemon.is())
+				{
+					return callback()
+				}*/
 
 				run(sockpath, function ()
 				{

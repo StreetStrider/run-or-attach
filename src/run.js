@@ -1,9 +1,15 @@
 
+var daemon = require('./util/daemon')
 var server = require('net').createServer
 var rm = require('fs').unlinkSync
 
 module.exports = function (sockpath, callback)
 {
+	if (! daemon.is())
+	{
+		return callback()
+	}
+
 	server()
 	.on('connection', function (socket)
 	{
