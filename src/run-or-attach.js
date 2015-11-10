@@ -11,6 +11,8 @@ module.exports = function (sockpath, callback)
 {
 	if (daemon.is())
 	{
+		console.info('daemon started')
+
 		callback = null
 
 		var run = require('./run')

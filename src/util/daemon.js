@@ -9,7 +9,8 @@ var daemon = module.exports = function ()
 	var opts =
 	{
 		// stdio: 'ignore',
-		stdio: [ 'ignore', process.stdout, process.stderr ],
+		// stdio: [ 'ignore', process.stdout, process.stderr ],
+		silent: false,
 		detached: true,
 		env:
 		{

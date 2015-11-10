@@ -19,7 +19,6 @@ attach('/tmp/sock', function (error, socket)
 		socket.on('data', function (data)
 		{
 			console.dir(data)
-			console.info('daemon: %s', daemon.is())
 		})
 	}
 })
