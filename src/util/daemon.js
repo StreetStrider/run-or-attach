@@ -26,5 +26,5 @@ var daemon = module.exports = function ()
 
 daemon.is = function ()
 {
-	return !! process.env.RUN_OR_ATTACH_DAEMON
+	return process.send && (!! process.env.RUN_OR_ATTACH_DAEMON)
 }

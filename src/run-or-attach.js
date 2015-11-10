@@ -4,35 +4,34 @@ var check = require('./check')
 var attach = require('./attach')
 
 // workerfn
+
+var daemon = require('./util/daemon')
+
 module.exports = function (sockpath, callback)
 {
-	check(sockpath, function (error)
+	if (daemon.is())
+	{
+		callback = null
+
+		var run = require('./run')
+
+		run(sockpath)
+	}
+	else check(sockpath, function (error)
 	{
 		if (error)
 		{
 			if (error.code === 'ENOENT')
 			{
-				var daemon = require('./util/daemon')
-
 				var child = daemon()
 
-				if (daemon.is())
+				child.on('message', function (data)
 				{
-					var run = require('./run')
-					callback = null
-
-					run(sockpath)
-				}
-				else
-				{
-					child.on('message', function (data)
+					if (data === 'RUN_OR_ATTACH_READY')
 					{
-						if (data === 'RUN_OR_ATTACH_READY')
-						{
-							return attach(sockpath, callback)
-						}
-					})
-				}
+						return attach(sockpath, callback)
+					}
+				})
 			}
 			else
 			{
