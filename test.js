@@ -21,6 +21,8 @@ attach('/tmp/sock', function (error, socket)
 		socket.on('data', function (data)
 		{
 			console.dir(data)
+
+			process.exit(0)
 		})
 	}
 })
