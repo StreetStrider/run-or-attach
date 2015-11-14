@@ -5,6 +5,8 @@ var attach = require('./src/run-or-attach')
 
 var daemon = require('./src/util/daemon')
 
+process.env.RUN_OR_ATTACH_DEBUG = true
+
 attach('/tmp/sock', function (error, socket)
 {
 	if (error)

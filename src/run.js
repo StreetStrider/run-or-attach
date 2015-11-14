@@ -43,7 +43,7 @@ module.exports = function (sockpath)
 
 		function teardown (args)
 		{
-			console.info('teardown')
+			process.env.RUN_OR_ATTACH_DEBUG && console.info('teardown')
 			rm(sockpath)
 		}
 

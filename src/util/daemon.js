@@ -10,11 +10,12 @@ var daemon = module.exports = function ()
 	{
 		// stdio: 'ignore',
 		// stdio: [ 'ignore', process.stdout, process.stderr ],
-		silent: false,
+		silent: ! process.env.RUN_OR_ATTACH_DEBUG,
 		detached: true,
 		env:
 		{
-			RUN_OR_ATTACH_DAEMON: true
+			RUN_OR_ATTACH_DAEMON: true,
+			RUN_OR_ATTACH_DEBUG: process.env.RUN_OR_ATTACH_DEBUG
 		}
 	}
 

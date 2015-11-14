@@ -11,7 +11,7 @@ module.exports = function (sockpath, callback)
 {
 	if (daemon.is())
 	{
-		console.info('daemon started')
+		process.env.RUN_OR_ATTACH_DEBUG && console.info('daemon started')
 
 		callback = null
 
