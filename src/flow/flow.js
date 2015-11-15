@@ -60,6 +60,27 @@ function flowRecv (flow, str)
 
 		var result = flow.recv(data)
 
-		result && flow(result)
+		if (result)
+		{
+			resolve(result).then(flow)
+		}
 	}
+}
+
+
+var P = Promise.resolve
+
+function resolve (value)
+{
+	return P(value).catch(function (error)
+	{
+		if (error instanceof Error)
+		{
+			return error
+		}
+		else
+		{
+			return new Error(error)
+		}
+	})
 }

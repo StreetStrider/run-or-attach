@@ -24,6 +24,6 @@ attach('/tmp/sock', serverfn, function (error, flow)
 
 function serverfn (data)
 {
-	data.x += 1
-	return data
+	data.x += 1;
+	return new Promise((rs) => { setTimeout(() => rs(data), 100) })
 }
