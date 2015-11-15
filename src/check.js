@@ -13,15 +13,13 @@ module.exports = function (sockpath, callback)
 		{
 			socket.setEncoding('utf-8')
 
-			socket.on('data', function (data)
+			socket.once('data', function (data)
 			{
 				if (data === 'yup!\n')
 				{
 					clearTimeout(timeout)
 
-					socket.end()
-
-					return callback()
+					return callback(null, socket)
 				}
 				else
 				{
@@ -46,7 +44,7 @@ module.exports = function (sockpath, callback)
 			socket.write('alive?\n')
 		})
 
-		socket.on('error', callback)
+		socket.once('error', callback)
 	}
 	catch (error)
 	{

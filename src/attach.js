@@ -1,18 +1,31 @@
 
-var connect = require('net').connect
-
+var Socket  = require('net').Socket
 var Flow = require('./flow/flow')
 
-module.exports = function (sockpath, callback)
+module.exports = function (socket, callback)
 {
-	var socket = connect(sockpath, function ()
+	if (! (socket instanceof Socket))
 	{
-		socket.setEncoding('utf-8')
+		var connect = require('net').connect
 
+		socket = connect(socket, function ()
+		{
+			socket.setEncoding('utf-8')
+
+			ok(socket)
+		})
+	}
+	else
+	{
+		ok(socket)
+	}
+
+	socket.once('error', callback)
+
+	function ok (socket)
+	{
 		var flow = Flow(socket)
 
 		return callback(null, flow)
-	})
-
-	socket.on('error', callback)
+	}
 }

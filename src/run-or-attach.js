@@ -12,7 +12,7 @@ module.exports = function (sockpath, fWorker, callback)
 
 		run(sockpath, fWorker)
 	}
-	else check(sockpath, function (error)
+	else check(sockpath, function (error, socket)
 	{
 		var attach = require('./attach')
 
@@ -37,7 +37,7 @@ module.exports = function (sockpath, fWorker, callback)
 		}
 		else
 		{
-			return attach(sockpath, callback)
+			return attach(socket, callback)
 		}
 	})
 }
