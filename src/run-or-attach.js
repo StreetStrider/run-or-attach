@@ -1,9 +1,6 @@
 
-
 var daemon = require('./util/daemon')
-
 var check = require('./check')
-var attach = require('./attach')
 
 module.exports = function (sockpath, serverfn, callback)
 {
@@ -19,6 +16,8 @@ module.exports = function (sockpath, serverfn, callback)
 	}
 	else check(sockpath, function (error)
 	{
+		var attach = require('./attach')
+
 		if (error)
 		{
 			if (error.code === 'ENOENT')

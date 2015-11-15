@@ -1,9 +1,8 @@
 
-var spawn = require('child_process').spawn
-var fork = require('child_process').fork
-
 var daemon = module.exports = function ()
 {
+	var fork = require('child_process').fork
+
 	var args = process.argv.slice(1)
 
 	var opts =
