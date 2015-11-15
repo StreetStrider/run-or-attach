@@ -10,6 +10,7 @@ var worker = FWorker()
 worker.init = function ()
 {
 	console.info('init worker')
+	process.title = 'run-or-attach'
 }
 
 worker.conn = function ()
