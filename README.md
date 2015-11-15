@@ -24,7 +24,7 @@ attach('/tmp/sock', worker /* described below */, function (error, flow)
 })
 
 // worker is a daemon handler
-var FWorker = require('run-or-attach/src/flow/worker')
+var FWorker = require('run-or-attach/worker')
 
 var worker = FWorker()
 worker.recv = function (data)

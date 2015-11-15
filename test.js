@@ -3,7 +3,7 @@ require('console-ultimate/global').replace()
 process.env.RUN_OR_ATTACH_DEBUG = true
 
 
-var FWorker = require('./src/flow/worker')
+var FWorker = require('./worker')
 
 var worker = FWorker()
 
