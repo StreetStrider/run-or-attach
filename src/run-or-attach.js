@@ -6,8 +6,6 @@ module.exports = function (sockpath, fWorker, callback)
 {
 	if (daemon.is())
 	{
-		process.env.RUN_OR_ATTACH_DEBUG && console.info('daemon started')
-
 		callback = null
 
 		var run = require('./run')

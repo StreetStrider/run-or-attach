@@ -10,7 +10,11 @@ var worker = FWorker()
 worker.init = function ()
 {
 	console.info('init worker')
-	console.trace()
+}
+
+worker.conn = function ()
+{
+	console.info('conn to worker')
 }
 
 worker.recv = function (data)
