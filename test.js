@@ -2,9 +2,27 @@
 require('console-ultimate/global').replace()
 process.env.RUN_OR_ATTACH_DEBUG = true
 
+
+var FWorker = require('./src/flow/worker')
+
+var worker = FWorker()
+
+worker.init = function ()
+{
+	console.info('init worker')
+	console.trace()
+}
+
+worker.recv = function (data)
+{
+	data.x += 1;
+	return new Promise((rs) => { setTimeout(() => rs(data), 100) })
+}
+
+
 var attach = require('./src/run-or-attach')
 
-attach('/tmp/sock', serverfn, function (error, flow)
+attach('/tmp/sock', worker, function (error, flow)
 {
 	if (error)
 	{
@@ -21,9 +39,3 @@ attach('/tmp/sock', serverfn, function (error, flow)
 		}
 	}
 })
-
-function serverfn (data)
-{
-	data.x += 1;
-	return new Promise((rs) => { setTimeout(() => rs(data), 100) })
-}

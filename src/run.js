@@ -5,7 +5,7 @@ var rm = require('fs').unlinkSync
 
 var Flow = require('./flow/flow')
 
-module.exports = function (sockpath, serverfn)
+module.exports = function (sockpath, fWorker)
 {
 	if (! daemon.is())
 	{
@@ -17,12 +17,14 @@ module.exports = function (sockpath, serverfn)
 	{
 		socket.setEncoding('utf-8')
 
-		var flow = Flow(socket, serverfn)
+		var flow = Flow(socket, fWorker)
 	})
 	.listen(sockpath)
 	.on('listening', function (error)
 	{
 		if (error) return
+
+		fWorker.init()
 
 		// process.on('SIGINT', teardown)
 		process.on('SIGINT', process.exit)

@@ -2,7 +2,7 @@
 var daemon = require('./util/daemon')
 var check = require('./check')
 
-module.exports = function (sockpath, serverfn, callback)
+module.exports = function (sockpath, fWorker, callback)
 {
 	if (daemon.is())
 	{
@@ -12,7 +12,7 @@ module.exports = function (sockpath, serverfn, callback)
 
 		var run = require('./run')
 
-		run(sockpath, serverfn)
+		run(sockpath, fWorker)
 	}
 	else check(sockpath, function (error)
 	{

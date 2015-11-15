@@ -4,7 +4,7 @@ var load = JSON.parse
 
 var Next = require('../util/next-id')
 
-module.exports = function Flow (socket, serverfn)
+module.exports = function Flow (socket, fWorker)
 {
 	var next = Next()
 
@@ -19,16 +19,20 @@ module.exports = function Flow (socket, serverfn)
 
 	flow.socket = socket
 
-	flow.recv = serverfn
+	socket.on('data', Handler(flow, !! fWorker))
 
-	socket.on('data', Handler(flow, serverfn))
+	if (fWorker)
+	{
+		fWorker.conn(socket)
+		flow.recv = fWorker.recv.bind(fWorker)
+	}
 
 	return flow
 }
 
-function Handler (flow, serverfn)
+function Handler (flow, isServer)
 {
-	if (serverfn)
+	if (isServer)
 	{
 		var socket = flow.socket
 
