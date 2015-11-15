@@ -20,14 +20,9 @@ module.exports = function (sockpath, fWorker, callback)
 		{
 			if (error.code === 'ENOENT')
 			{
-				var child = daemon()
-
-				child.on('message', function (data)
+				daemon().on('daemon-ready', function ()
 				{
-					if (data === 'RUN_OR_ATTACH_READY')
-					{
-						return attach(sockpath, callback)
-					}
+					return attach(sockpath, callback)
 				})
 			}
 			else

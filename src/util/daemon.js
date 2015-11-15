@@ -22,6 +22,14 @@ var daemon = module.exports = function ()
 
 	child.unref()
 
+	child.on('message', function (data)
+	{
+		if (data === 'RUN_OR_ATTACH_READY')
+		{
+			child.emit('daemon-ready')
+		}
+	})
+
 	return child
 }
 
