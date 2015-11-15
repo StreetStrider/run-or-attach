@@ -13,13 +13,13 @@ module.exports = function (sockpath, fWorker)
 	}
 
 	server()
+	.listen(sockpath)
 	.on('connection', function (socket)
 	{
 		socket.setEncoding('utf-8')
 
 		var flow = Flow(socket, fWorker)
 	})
-	.listen(sockpath)
 	.on('listening', function (error)
 	{
 		if (error) return
@@ -32,8 +32,8 @@ module.exports = function (sockpath, fWorker)
 
 		function teardown (args)
 		{
-			process.env.RUN_OR_ATTACH_DEBUG && console.info('teardown')
 			rm(sockpath)
+			fWorker.down()
 		}
 
 		process.send('RUN_OR_ATTACH_READY')

@@ -17,6 +17,11 @@ worker.conn = function ()
 	console.info('conn to worker')
 }
 
+worker.down = function ()
+{
+	console.info('worker teardown')
+}
+
 worker.recv = function (data)
 {
 	data.x += 1;
