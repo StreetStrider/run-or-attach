@@ -1,6 +1,7 @@
 {
 	"name": "run-or-attach",
-	"version": "0.1.0",
+	"version": "0.2.0",
+	"description": "kickstart Node.js daemon on first demand and attach to it",
 
 	"main": "src/run-or-attach",
 
