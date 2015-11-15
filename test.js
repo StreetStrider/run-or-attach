@@ -4,7 +4,7 @@ process.env.RUN_OR_ATTACH_DEBUG = true
 
 var attach = require('./src/run-or-attach')
 
-attach('/tmp/sock', function (error, flow)
+attach('/tmp/sock', serverfn, function (error, flow)
 {
 	if (error)
 	{
@@ -21,3 +21,9 @@ attach('/tmp/sock', function (error, flow)
 		}
 	}
 })
+
+function serverfn (data)
+{
+	data.x += 1
+	return data
+}

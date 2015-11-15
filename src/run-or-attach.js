@@ -1,13 +1,11 @@
 
 
+var daemon = require('./util/daemon')
+
 var check = require('./check')
 var attach = require('./attach')
 
-// workerfn
-
-var daemon = require('./util/daemon')
-
-module.exports = function (sockpath, callback)
+module.exports = function (sockpath, serverfn, callback)
 {
 	if (daemon.is())
 	{
@@ -17,7 +15,7 @@ module.exports = function (sockpath, callback)
 
 		var run = require('./run')
 
-		run(sockpath)
+		run(sockpath, serverfn)
 	}
 	else check(sockpath, function (error)
 	{

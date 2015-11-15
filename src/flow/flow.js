@@ -4,7 +4,7 @@ var load = JSON.parse
 
 var Next = require('../util/next-id')
 
-module.exports = function Flow (socket)
+module.exports = function Flow (socket, serverfn)
 {
 	var next = Next()
 
@@ -17,21 +17,49 @@ module.exports = function Flow (socket)
 		socket.write(str)
 	}
 
-	flow.recv = null
-
-	socket.on('data', function (str)
-	{
-		if (typeof flow.recv === 'function')
-		{
-			var msg = load(str)
-
-			var data = msg.data
-
-			flow.recv(data)
-		}
-	})
-
 	flow.socket = socket
 
+	flow.recv = serverfn
+
+	socket.on('data', Handler(flow, serverfn))
+
 	return flow
+}
+
+function Handler (flow, serverfn)
+{
+	if (serverfn)
+	{
+		var socket = flow.socket
+
+		return function (str)
+		{
+			if (str === 'alive?\n')
+			{
+				socket.write('yup!\n')
+			}
+			else
+			{
+				flowRecv(flow, str)
+			}
+		}
+	}
+	else
+	{
+		return flowRecv.bind(null, flow)
+	}
+}
+
+function flowRecv (flow, str)
+{
+	if (typeof flow.recv === 'function')
+	{
+		var msg = load(str)
+
+		var data = msg.data
+
+		var result = flow.recv(data)
+
+		result && flow(result)
+	}
 }

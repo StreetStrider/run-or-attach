@@ -3,7 +3,9 @@ var daemon = require('./util/daemon')
 var server = require('net').createServer
 var rm = require('fs').unlinkSync
 
-module.exports = function (sockpath)
+var Flow = require('./flow/flow')
+
+module.exports = function (sockpath, serverfn)
 {
 	if (! daemon.is())
 	{
@@ -15,22 +17,7 @@ module.exports = function (sockpath)
 	{
 		socket.setEncoding('utf-8')
 
-		socket.on('data', function (data)
-		{
-			if (data === 'alive?\n')
-			{
-				socket.write('yup!\n')
-			}
-			else
-			{
-				data = JSON.parse(data)
-
-				data.x += 1
-
-				socket.write(JSON.stringify(data))
-				// pass to next handler
-			}
-		})
+		var flow = Flow(socket, serverfn)
 	})
 	.listen(sockpath)
 	.on('listening', function (error)
