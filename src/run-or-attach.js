@@ -11,6 +11,8 @@ module.exports = function (sockpath, fWorker, callback)
 		var run = require('./run')
 
 		run(sockpath, fWorker)
+
+		return /* daemon returns nothing, since it works in forked */
 	}
 	else check(sockpath, function (error, socket)
 	{
