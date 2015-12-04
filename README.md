@@ -5,9 +5,10 @@
 Split your application or utility into cli-part and daemon-part. Then connect to daemon in cli-part. Daemon will be started on first demand.
 
 ```js
+/* main file */
 var attach = require('run-or-attach')
 
-attach('/tmp/sock', worker /* described below */)
+attach('/tmp/sock', require.resolve('./path-to-worker'))
 .then(function (flow)
 {
 	// flow is a function for pushing JSON to daemon
@@ -21,11 +22,13 @@ attach('/tmp/sock', worker /* described below */)
 		process.exit(0)
 	}
 })
+```
 
-// worker is a daemon handler
-var FWorker = require('run-or-attach/worker')
+```
+/* worker file */
+var Worker = require('run-or-attach/worker')
 
-var worker = FWorker()
+var worker = Worker()
 worker.recv = function (data)
 {
 	data.x += 1;
