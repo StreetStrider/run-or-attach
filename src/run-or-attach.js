@@ -8,23 +8,21 @@ module.exports = function (sockpath, fWorker)
 	{
 		var run = require('./run')
 
-		run(sockpath, fWorker)
-
-		return Promise.resolve()
+		return run(sockpath, fWorker)
 	}
-	else return check(sockpath)
+
+
+	var attach = require('./attach')
+
+	return check(sockpath)
 	.then(function (socket)
 	{
-		var attach = require('./attach')
-
 		return attach(socket)
 	},
 	function (error)
 	{
 		if (error.code === 'ENOENT')
 		{
-			var attach = require('./attach')
-
 			return new Promise(function (rs, rj)
 			{
 				daemon().on('daemon-ready', function ()

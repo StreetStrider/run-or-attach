@@ -38,4 +38,6 @@ module.exports = function (sockpath, fWorker)
 
 		process.send('RUN_OR_ATTACH_READY')
 	})
+
+	return Promise.resolve()
 }
