@@ -2,8 +2,10 @@
 var Socket  = require('net').Socket
 var Flow = require('./flow/flow')
 
-module.exports = function (socket, callback)
+module.exports = function (socket)
 {
+	return new Promise(function (rs, rj)
+	{
 	if (! (socket instanceof Socket))
 	{
 		var connect = require('net').connect
@@ -20,12 +22,13 @@ module.exports = function (socket, callback)
 		ok(socket)
 	}
 
-	socket.once('error', callback)
+	socket.once('error', rj)
 
 	function ok (socket)
 	{
 		var flow = Flow(socket)
 
-		return callback(null, flow)
+		return rs(flow)
 	}
+	})
 }

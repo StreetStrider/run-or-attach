@@ -2,39 +2,40 @@
 var daemon = require('./util/daemon')
 var check = require('./check')
 
-module.exports = function (sockpath, fWorker, callback)
+module.exports = function (sockpath, fWorker)
 {
 	if (daemon.is())
 	{
-		callback = null
-
 		var run = require('./run')
 
 		run(sockpath, fWorker)
 
-		return /* daemon returns nothing, since it works in forked */
+		return Promise.resolve()
 	}
-	else check(sockpath, function (error, socket)
+	else return check(sockpath)
+	.then(function (socket)
 	{
 		var attach = require('./attach')
 
-		if (error)
+		return attach(socket)
+	},
+	function (error)
+	{
+		if (error.code === 'ENOENT')
 		{
-			if (error.code === 'ENOENT')
+			var attach = require('./attach')
+
+			return new Promise(function (rs, rj)
 			{
 				daemon().on('daemon-ready', function ()
 				{
-					return attach(sockpath, callback)
+					return rs(attach(sockpath))
 				})
-			}
-			else
-			{
-				return callback(error)
-			}
+			})
 		}
 		else
 		{
-			return attach(socket, callback)
+			return Promise.reject(error)
 		}
 	})
 }

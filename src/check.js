@@ -3,8 +3,10 @@ var fs = require('fs')
 var access = fs.accessSync
 var connect = require('net').connect
 
-module.exports = function (sockpath, callback)
+module.exports = function (sockpath)
 {
+	return new Promise(function (rs, rj)
+	{
 	try
 	{
 		var up = access(sockpath, fs.R_OK | fs.W_OK)
@@ -19,7 +21,7 @@ module.exports = function (sockpath, callback)
 				{
 					clearTimeout(timeout)
 
-					return callback(null, socket)
+					return rs(socket)
 				}
 				else
 				{
@@ -38,16 +40,17 @@ module.exports = function (sockpath, callback)
 
 				socket.end()
 
-				return callback(error)
+				return rj(error)
 			}
 
 			socket.write('alive?\n')
 		})
 
-		socket.once('error', callback)
+		socket.once('error', rj)
 	}
 	catch (error)
 	{
-		return callback(error)
+		return rj(error)
 	}
+	})
 }

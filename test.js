@@ -32,20 +32,18 @@ worker.recv = function (data)
 
 var attach = require('./src/run-or-attach')
 
-attach('/tmp/sock', worker, function (error, flow)
+attach('/tmp/sock', worker)
+.then(function (flow)
 {
-	if (error)
+	flow({ x: Math.random() })
+	flow.recv = function (data)
 	{
-		console.error(error)
-	}
-	else
-	{
-		flow({ x: Math.random() })
-		flow.recv = function (data)
-		{
-			console.dir(data)
+		console.dir(data)
 
-			process.exit(0)
-		}
+		process.exit(0)
 	}
+},
+function (error)
+{
+	console.error(error)
 })
