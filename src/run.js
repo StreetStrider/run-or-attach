@@ -39,5 +39,5 @@ module.exports = function (sockpath, fWorker)
 		process.send('RUN_OR_ATTACH_READY')
 	})
 
-	return Promise.resolve()
+	return new Promise((rs, rj) => {}) /* @@todo I think it's not OK… */
 }
