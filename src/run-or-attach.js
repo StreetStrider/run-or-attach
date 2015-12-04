@@ -1,19 +1,10 @@
 
-var daemon = require('./util/daemon')
-var check = require('./check')
+var check  = require('./check')
+var attach = require('./attach')
+var daemon = require('./daemon/daemon')
 
-module.exports = function (sockpath, fWorker)
+module.exports = function (sockpath, workerpath)
 {
-	if (daemon.is())
-	{
-		var run = require('./run')
-
-		return run(sockpath, fWorker)
-	}
-
-
-	var attach = require('./attach')
-
 	return check(sockpath)
 	.then(function (socket)
 	{
@@ -25,7 +16,7 @@ module.exports = function (sockpath, fWorker)
 		{
 			return new Promise(function (rs, rj)
 			{
-				daemon().on('daemon-ready', function ()
+				daemon(sockpath, workerpath).on('daemon-ready', function ()
 				{
 					return rs(attach(sockpath))
 				})
