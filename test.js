@@ -13,7 +13,7 @@ worker.init = function ()
 	process.title = 'run-or-attach'
 }
 
-worker.conn = function ()
+worker.conn = function (socket)
 {
 	console.info('conn to worker')
 }

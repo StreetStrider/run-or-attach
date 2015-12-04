@@ -7,10 +7,9 @@ Split your application or utility into cli-part and daemon-part. Then connect to
 ```js
 var attach = require('run-or-attach')
 
-attach('/tmp/sock', worker /* described below */, function (error, flow)
+attach('/tmp/sock', worker /* described below */)
+.then(function (flow)
 {
-	// … handle error
-
 	// flow is a function for pushing JSON to daemon
 	flow({ x: Math.random() })
 
