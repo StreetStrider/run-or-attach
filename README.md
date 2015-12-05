@@ -24,7 +24,7 @@ attach('/tmp/sock', require.resolve('./path-to-worker'))
 })
 ```
 
-```
+```js
 /* worker file */
 var Worker = require('run-or-attach/worker')
 
