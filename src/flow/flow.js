@@ -6,20 +6,35 @@ var Next = require('../util/next-id')
 
 module.exports = function Flow (socket, worker)
 {
-	var next = Next()
-
 	function flow (data)
 	{
-		var msg = { data: data, id: next() }
+		var packet = { data: data }
+		send(packet)
+	}
 
-		var str = dump(msg)
-
-		socket.write(str)
+	function send (packet)
+	{
+		socket.write(dump(packet))
 	}
 
 	flow.socket = socket
+	var next = Next()
+	var takebacks = {}
 
-	socket.on('data', Handler(flow, !! worker))
+	flow.request = function request (data)
+	{
+		var id = next()
+		var packet = { id: id, data: data }
+
+		send(packet)
+
+		return new Promise(function (rs, rj)
+		{
+			takebacks[id] = rs
+		})
+	}
+
+	socket.on('data', Handler(flow, send, takebacks, !! worker))
 
 	if (worker)
 	{
@@ -30,7 +45,7 @@ module.exports = function Flow (socket, worker)
 	return flow
 }
 
-function Handler (flow, isServer)
+function Handler (flow, send, takebacks, isServer)
 {
 	if (isServer)
 	{
@@ -44,39 +59,55 @@ function Handler (flow, isServer)
 			}
 			else
 			{
-				flowRecv(flow, str)
+				flowRecv(flow, send, takebacks, str)
 			}
 		}
 	}
 	else
 	{
-		return flowRecv.bind(null, flow)
+		return function (str)
+		{
+			flowRecv(flow, send, takebacks, str)
+		}
 	}
 }
 
-function flowRecv (flow, str)
+function flowRecv (flow, send, takebacks, str)
 {
-	if (typeof flow.recv === 'function')
+	var packet = load(str)
+
+	if ('rid' in packet)
 	{
-		var msg = load(str)
+		var rid = packet.rid
 
-		var data = msg.data
-
-		var result = flow.recv(data)
+		if (rid in takebacks)
+		{
+			takebacks[rid](packet.data)
+		}
+	}
+	else if (typeof flow.recv === 'function')
+	{
+		var result = flow.recv(packet.data)
 
 		if (result)
 		{
-			resolve(result).then(flow)
+			resolve(result).then(function (result)
+			{
+				var result__packet = { data: result }
+				if ('id' in packet)
+				{
+					result__packet.rid = packet.id
+				}
+				send(result__packet)
+			})
 		}
 	}
 }
 
 
-var P = Promise.resolve
-
 function resolve (value)
 {
-	return P(value).catch(function (error)
+	return Promise.resolve(value).catch(function (error)
 	{
 		if (error instanceof Error)
 		{

@@ -21,6 +21,11 @@ worker.down = function ()
 
 worker.recv = function (data)
 {
-	data.x += 1;
+	if (data.sqr)
+	{
+		return { data: data.sqr * data.sqr }
+	}
+
+	data.inc = [ data.inc, data.inc + 1 ]
 	return new Promise((rs) => { setTimeout(() => rs(data), 100) })
 }
