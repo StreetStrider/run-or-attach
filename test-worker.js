@@ -9,7 +9,7 @@ worker.init = function ()
 	process.title = 'run-or-attach'
 }
 
-worker.conn = function (socket)
+worker.conn = function (flow)
 {
 	console.info('conn to worker')
 }

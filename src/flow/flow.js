@@ -47,7 +47,7 @@ module.exports = function Flow (socket, worker)
 
 	if (worker)
 	{
-		worker.conn(socket)
+		worker.conn(flow)
 		flow.recv = worker.recv.bind(worker)
 	}
 
