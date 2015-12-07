@@ -14,8 +14,13 @@ module.exports = function Flow (socket, worker)
 
 	function send (packet)
 	{
-		socket.write(dump(packet))
+		if (! finalized)
+		{
+			socket.write(dump(packet))
+		}
 	}
+
+	var finalized = false
 
 	flow.socket = socket
 	var next = Next()
@@ -35,6 +40,10 @@ module.exports = function Flow (socket, worker)
 	}
 
 	socket.on('data', Handler(flow, send, takebacks, !! worker))
+	socket.on('end', function ()
+	{
+		finalized = true
+	})
 
 	if (worker)
 	{
