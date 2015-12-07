@@ -89,7 +89,17 @@ function Handler (flow, send, takebacks, isServer)
 
 function flowRecv (flow, send, takebacks, str)
 {
+	if (! str)
+	{
+		return
+	}
+
 	var packet = load(str)
+
+	if (packet instanceof Error)
+	{
+		return
+	}
 
 	if ('rid' in packet)
 	{

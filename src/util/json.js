@@ -18,7 +18,7 @@ json.load = function load (it)
 
 
 var _dump = JSON.stringify
-var _null = _dump(null)
+var _null = ''
 
 json.dump = function dump (it)
 {
