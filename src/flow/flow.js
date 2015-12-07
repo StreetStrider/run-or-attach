@@ -43,6 +43,11 @@ module.exports = function Flow (socket, worker)
 	socket.on('end', function ()
 	{
 		finalized = true
+
+		if (worker)
+		{
+			worker.dscn(flow)
+		}
 	})
 
 	if (worker)

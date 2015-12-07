@@ -6,6 +6,7 @@ module.exports = function FWorker ()
 
 	worker.init = noop
 	worker.conn = noop
+	worker.dscn = noop
 	worker.recv = noop
 	worker.down = noop
 

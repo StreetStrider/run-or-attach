@@ -14,6 +14,11 @@ worker.conn = function (flow)
 	console.info('conn to worker')
 }
 
+worker.dscn = function (flow)
+{
+	console.info('dscn from worker')
+}
+
 worker.down = function ()
 {
 	console.info('worker teardown')
