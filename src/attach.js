@@ -1,6 +1,7 @@
 
 var Socket  = require('net').Socket
 var Flow = require('./flow/flow')
+var socketUp = require('./util/socket-up')
 
 module.exports = function (socket)
 {
@@ -12,8 +13,7 @@ module.exports = function (socket)
 
 			socket = connect(socket, function ()
 			{
-				socket.setEncoding('utf-8')
-
+				socket = socketUp(socket)
 				ok(socket)
 			})
 		}

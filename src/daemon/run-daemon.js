@@ -10,6 +10,7 @@ var server = require('net').createServer
 var rm = require('fs').unlinkSync
 
 var Flow = require('../flow/flow')
+var socketUp = require('../util/socket-up')
 
 
 if (! daemon.is())
@@ -38,7 +39,7 @@ server()
 .listen(sockpath)
 .on('connection', function (socket)
 {
-	socket.setEncoding('utf-8')
+	socket = socketUp(socket)
 
 	var flow = Flow(socket, worker)
 })

@@ -2,6 +2,7 @@
 var fs = require('fs')
 var access = fs.accessSync
 var connect = require('net').connect
+var socketUp = require('./util/socket-up')
 
 module.exports = function (sockpath)
 {
@@ -13,7 +14,7 @@ module.exports = function (sockpath)
 
 			var socket = connect(sockpath, function (it)
 			{
-				socket.setEncoding('utf-8')
+				socket = socketUp(socket)
 
 				socket.once('data', function (data)
 				{
