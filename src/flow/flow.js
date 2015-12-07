@@ -1,6 +1,7 @@
 
-var dump = JSON.stringify
-var load = JSON.parse
+var json = require('../util/json')
+var dump = json.dump
+var load = json.load
 
 var Next = require('../util/next-id')
 
