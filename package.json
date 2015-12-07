@@ -1,9 +1,18 @@
 {
 	"name": "run-or-attach",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "kickstart Node.js daemon on first demand and attach to it",
 
+	"author":  "StreetStrider <teamfortresslife@gmail.com>",
+	"license": "MIT",
+
+	"keywords": [ "unix-socket", "socket", "daemon" ],
+
 	"main": "src/run-or-attach",
+
+	"homepage":                "https://github.com/streetstrider/run-or-attach#readme",
+	"repository": { "url": "git+https://github.com/streetstrider/run-or-attach.git", "type": "git" },
+	"bugs":       { "url":     "https://github.com/streetstrider/run-or-attach/issues" },
 
 	"devDependencies":
 	{
