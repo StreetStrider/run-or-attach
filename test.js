@@ -19,13 +19,14 @@ attach('/tmp/sock', require.resolve('./test-worker'))
 		console.error('request error:', error)
 	})
 
-	flow({ inc: Math.random() })
+	0 && flow({ inc: Math.random() })
 	flow.recv = function (data)
 	{
 		console.info('recv:')
 		console.dir(data)
-		process.exit(0)
 	}
+
+	setTimeout(process.exit, 10 * 1000)
 },
 function (error)
 {
