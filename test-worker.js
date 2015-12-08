@@ -16,7 +16,7 @@ worker.conn = function (flow)
 	console.info('conn to worker')
 
 	var next  = 0
-	var timer = setInterval(function ()
+	var timer = setInterval(() =>
 	{
 		next = next + 1
 		flow({ realtime: next })
