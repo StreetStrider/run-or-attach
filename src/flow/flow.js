@@ -10,7 +10,8 @@ module.exports = function Flow (socket, worker)
 	function flow (data)
 	{
 		var packet = { data: data }
-		send(packet)
+
+		setTimeout(() => send(packet), 0)
 	}
 
 	function send (packet)
