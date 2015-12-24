@@ -19,14 +19,6 @@ module.exports = function (sockpath, workerpath)
 			{
 				return attach(socket)
 			})
-
-			return new Promise(function (rs, rj)
-			{
-				daemon(sockpath, workerpath).on('daemon-ready', function ()
-				{
-					return rs(attach(sockpath))
-				})
-			})
 		}
 		else
 		{
