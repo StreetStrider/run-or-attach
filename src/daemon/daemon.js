@@ -34,16 +34,20 @@ var daemon = module.exports = function (sockpath, workerpath)
 
 	return loop()
 
-	function loop ()
+	function loop (n)
 	{
-		console.info('loop')
+		n || (n = 0)
+		if (n == 10)
+		{
+			return Promise.reject('timeout NOT_UP_DAEMON')
+		}
+
 		return check(sockpath)
 		.catch(function (error)
 		{
-			console.warn(error)
 			if (error.code === 'ENOENT')
 			{
-				return delay(100, loop)
+				return delay(100, loop.bind(null, n + 1))
 			}
 		})
 	}
