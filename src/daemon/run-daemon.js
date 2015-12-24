@@ -59,5 +59,5 @@ server()
 		worker.down()
 	}
 
-	process.send('RUN_OR_ATTACH_READY')
+	//process.send('RUN_OR_ATTACH_READY')
 })

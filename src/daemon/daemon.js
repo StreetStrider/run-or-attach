@@ -1,13 +1,12 @@
 
-var fork = require('child_process').fork
+var spawn = require('child_process').spawn
 
 var daemon = module.exports = function (sockpath, workerpath)
 {
 	var opts =
 	{
-		// stdio: 'ignore',
-		// stdio: [ 'ignore', process.stdout, process.stderr ],
-		silent: ! process.env.RUN_OR_ATTACH_DEBUG,
+		//stdio: !! process.env.RUN_OR_ATTACH_DEBUG ? 'inherit' : 'ignore',
+		stdio: 'ignore',
 		detached: true,
 		env:
 		{
@@ -17,11 +16,11 @@ var daemon = module.exports = function (sockpath, workerpath)
 		}
 	}
 
-	var child = fork(require.resolve('./run-daemon.js'), opts)
+	var child = spawn(process.argv[0], [ require.resolve('./run-daemon.js') ], opts)
 
 	child.unref()
 
-	child.on('message', function (data)
+	0 && child.on('message', function (data)
 	{
 		if (data === 'RUN_OR_ATTACH_READY')
 		{
@@ -29,14 +28,17 @@ var daemon = module.exports = function (sockpath, workerpath)
 		}
 	})
 
+	setTimeout(function ()
+	{
+		child.emit('daemon-ready')
+	}, 2000)
+
 	return child
 }
 
 daemon.is = function ()
 {
 	return (
-		(!! process.send)
-		&&
 		(!! process.env.RUN_OR_ATTACH_WORKERPATH)
 		&&
 		(!! process.env.RUN_OR_ATTACH_SOCKPATH)
