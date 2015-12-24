@@ -36,13 +36,18 @@ var daemon = module.exports = function (sockpath, workerpath)
 		return check(sockpath)
 		.catch(noent(function ()
 		{
-			return delay(100, loop.bind(null, n + 1))
+			return delay(100, looped(n))
 		}))
 	}
 
 	function delay (timeout, fn)
 	{
 		return new Promise((rs) => setTimeout(rs, timeout)).then(fn)
+	}
+
+	function looped (next)
+	{
+		return () => loop(next + 1)
 	}
 }
 
