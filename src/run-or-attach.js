@@ -14,6 +14,12 @@ module.exports = function (sockpath, workerpath)
 	{
 		if (error.code === 'ENOENT')
 		{
+			return daemon(sockpath, workerpath)
+			.then(function (socket)
+			{
+				return attach(socket)
+			})
+
 			return new Promise(function (rs, rj)
 			{
 				daemon(sockpath, workerpath).on('daemon-ready', function ()
