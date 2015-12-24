@@ -2,27 +2,14 @@
 var check  = require('./check')
 var attach = require('./attach')
 var daemon = require('./daemon/daemon')
+var noent  = require('./util/noent')
 
 module.exports = function (sockpath, workerpath)
 {
 	return check(sockpath)
-	.then(function (socket)
+	.then(attach, noent(function ()
 	{
-		return attach(socket)
-	},
-	function (error)
-	{
-		if (error.code === 'ENOENT')
-		{
-			return daemon(sockpath, workerpath)
-			.then(function (socket)
-			{
-				return attach(socket)
-			})
-		}
-		else
-		{
-			return Promise.reject(error)
-		}
-	})
+		return daemon(sockpath, workerpath)
+		.then(attach)
+	}))
 }

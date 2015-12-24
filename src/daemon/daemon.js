@@ -1,20 +1,11 @@
 
 var spawn = require('child_process').spawn
 
-var stream = require('stream')
-
 var check = require('../check')
-
+var noent = require('../util/noent')
 
 var daemon = module.exports = function (sockpath, workerpath)
 {
-	var capture = new stream.Transform;
-	capture._transform = function (data, encoding, callback)
-	{
-		console.dir(data.toString())
-		callback(null, data)
-	}
-
 	var opts =
 	{
 		// stdio: !! process.env.RUN_OR_ATTACH_DEBUG ? 'inherit' : 'ignore',
@@ -43,13 +34,10 @@ var daemon = module.exports = function (sockpath, workerpath)
 		}
 
 		return check(sockpath)
-		.catch(function (error)
+		.catch(noent(function ()
 		{
-			if (error.code === 'ENOENT')
-			{
-				return delay(100, loop.bind(null, n + 1))
-			}
-		})
+			return delay(100, loop.bind(null, n + 1))
+		}))
 	}
 
 	function delay (timeout, fn)
