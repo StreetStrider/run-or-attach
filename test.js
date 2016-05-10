@@ -8,21 +8,21 @@ process.env.RUN_OR_ATTACH_DEBUG = true
 var attach = require('./src/run-or-attach')
 
 attach('/tmp/sock', require.resolve('./test-worker'))
-.then(function (flow)
+.then((flow) =>
 {
 	flow.request({ sqr: 2 })
-	.then(function (r)
+	.then((r) =>
 	{
 		console.info('request:')
 		console.dir(r)
 	})
-	.catch(function (error)
+	.catch((error) =>
 	{
 		console.error('request error:', error)
 	})
 
 	flow({ inc: Math.random() })
-	flow.recv = function (data)
+	flow.recv = (data) =>
 	{
 		console.info('recv:')
 		console.dir(data)
@@ -33,8 +33,5 @@ attach('/tmp/sock', require.resolve('./test-worker'))
 			process.exit()
 		}
 	}
-},
-function (error)
-{
-	console.error(error)
-})
+}
+, console.error)

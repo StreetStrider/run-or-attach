@@ -3,7 +3,7 @@ var Worker = require('./worker')
 
 var worker = module.exports = Worker()
 
-worker.init = function ()
+worker.init = () =>
 {
 	console.info('init worker')
 	process.title = 'run-or-attach'
@@ -11,7 +11,7 @@ worker.init = function ()
 	worker.clients = new WeakMap
 }
 
-worker.conn = function (flow)
+worker.conn = (flow) =>
 {
 	console.info('conn to worker')
 
@@ -27,7 +27,7 @@ worker.conn = function (flow)
 	worker.clients.set(flow, timer)
 }
 
-worker.dscn = function (flow)
+worker.dscn = (flow) =>
 {
 	console.info('dscn from worker')
 	var timer = worker.clients.get(flow)
@@ -35,12 +35,12 @@ worker.dscn = function (flow)
 	clearInterval(timer)
 }
 
-worker.down = function ()
+worker.down = () =>
 {
 	console.info('worker teardown')
 }
 
-worker.recv = function (data)
+worker.recv = (data) =>
 {
 	if (data.sqr)
 	{

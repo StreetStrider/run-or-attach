@@ -42,7 +42,7 @@ module.exports = function Flow (socket, worker)
 	}
 
 	socket.on('data', Handler(flow, send, takebacks, !! worker))
-	socket.on('end', function ()
+	socket.on('end', () =>
 	{
 		finalized = true
 
@@ -67,7 +67,7 @@ function Handler (flow, send, takebacks, isServer)
 	{
 		var socket = flow.socket
 
-		return function (str)
+		return (str) =>
 		{
 			if (str === 'alive?\n')
 			{
@@ -81,7 +81,7 @@ function Handler (flow, send, takebacks, isServer)
 	}
 	else
 	{
-		return function (str)
+		return (str) =>
 		{
 			flowRecv(flow, send, takebacks, str)
 		}
@@ -117,7 +117,7 @@ function flowRecv (flow, send, takebacks, str)
 
 		if (result)
 		{
-			resolve(result).then(function (result)
+			resolve(result).then(result =>
 			{
 				var result__packet = { data: result }
 				if ('id' in packet)
@@ -133,7 +133,7 @@ function flowRecv (flow, send, takebacks, str)
 
 function resolve (value)
 {
-	return Promise.resolve(value).catch(function (error)
+	return Promise.resolve(value).catch(error =>
 	{
 		if (error instanceof Error)
 		{

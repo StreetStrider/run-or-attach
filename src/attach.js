@@ -3,15 +3,15 @@ var Socket  = require('net').Socket
 var Flow = require('./flow/flow')
 var socketUp = require('./util/socket-up')
 
-module.exports = function (socket)
+module.exports = function attach (socket)
 {
-	return new Promise(function (rs, rj)
+	return new Promise((rs, rj) =>
 	{
 		if (! (socket instanceof Socket))
 		{
 			var connect = require('net').connect
 
-			socket = connect(socket, function ()
+			socket = connect(socket, () =>
 			{
 				socket = socketUp(socket)
 				ok(socket)

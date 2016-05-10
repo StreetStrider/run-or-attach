@@ -4,9 +4,9 @@ var access = fs.accessSync
 var connect = require('net').connect
 var socketUp = require('./util/socket-up')
 
-module.exports = function (sockpath)
+module.exports = function check (sockpath)
 {
-	return new Promise(function (rs, rj)
+	return new Promise((rs, rj) =>
 	{
 		try
 		{

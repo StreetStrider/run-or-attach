@@ -4,7 +4,7 @@ var spawn = require('child_process').spawn
 var check = require('../check')
 var noent = require('../util/noent')
 
-var daemon = module.exports = function (sockpath, workerpath)
+var daemon = module.exports = function daemon (sockpath, workerpath)
 {
 	var opts =
 	{
@@ -40,10 +40,7 @@ var daemon = module.exports = function (sockpath, workerpath)
 		}
 
 		return check(sockpath)
-		.catch(noent(function ()
-		{
-			return delay(100, looped(n))
-		}))
+		.catch(noent(() => { return delay(100, looped(n)) }))
 	}
 
 	function delay (timeout, fn)
@@ -57,7 +54,7 @@ var daemon = module.exports = function (sockpath, workerpath)
 	}
 }
 
-daemon.is = function ()
+daemon.is = function is_daemon ()
 {
 	return (
 		(!! process.env.RUN_OR_ATTACH_WORKERPATH)

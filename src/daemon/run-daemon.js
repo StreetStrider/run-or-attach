@@ -38,13 +38,13 @@ var sockpath = process.env.RUN_OR_ATTACH_SOCKPATH
 
 server()
 .listen(sockpath)
-.on('connection', function (socket)
+.on('connection', (socket) =>
 {
 	socket = socketUp(socket)
 
 	Flow(socket, worker)
 })
-.on('listening', function (error)
+.on('listening', (error) =>
 {
 	if (error) return
 
