@@ -35,7 +35,7 @@ module.exports = function Flow (socket, worker)
 
 		send(packet)
 
-		return new Promise(function (rs, rj)
+		return new Promise(rs =>
 		{
 			takebacks[id] = rs
 		})

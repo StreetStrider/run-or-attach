@@ -10,13 +10,13 @@ module.exports = function (sockpath)
 	{
 		try
 		{
-			var up = access(sockpath, fs.R_OK | fs.W_OK)
+			access(sockpath, fs.R_OK | fs.W_OK)
 
-			var socket = connect(sockpath, function (it)
+			var socket = connect(sockpath, () =>
 			{
 				socket = socketUp(socket)
 
-				socket.once('data', function (data)
+				socket.once('data', data =>
 				{
 					if (data === 'yup!\n')
 					{

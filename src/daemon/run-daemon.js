@@ -42,7 +42,7 @@ server()
 {
 	socket = socketUp(socket)
 
-	var flow = Flow(socket, worker)
+	Flow(socket, worker)
 })
 .on('listening', function (error)
 {
@@ -54,7 +54,7 @@ server()
 	process.on('SIGINT', process.exit)
 	process.on('exit', teardown)
 
-	function teardown (args)
+	function teardown ()
 	{
 		rm(sockpath)
 		worker.down()
