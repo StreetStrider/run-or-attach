@@ -5,12 +5,15 @@ var attach = require('../')
 
 describe('run-or-attach', () =>
 {
-
 	it('exports correct function', () =>
 	{
 		expect(attach).a('function')
 
-		//sockpath, workerpath
+		var source = String(attach)
+
+		expect(attach.length).equal(2)
+		expect(source).contains('(sockpath')
+		expect(source).contains('workerpath)')
 	})
 
 })
