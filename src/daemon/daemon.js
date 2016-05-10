@@ -13,13 +13,19 @@ var daemon = module.exports = function (sockpath, workerpath)
 		detached: true,
 		env:
 		{
+			/* eslint-disable id-length */
 			RUN_OR_ATTACH_WORKERPATH: workerpath,
 			RUN_OR_ATTACH_SOCKPATH: sockpath,
 			RUN_OR_ATTACH_DEBUG: process.env.RUN_OR_ATTACH_DEBUG
+			/* eslint-enable */
 		}
 	}
 
-	var child = spawn(process.argv[0], [ require.resolve('./run-daemon.js') ], opts)
+	var child = spawn(
+	  process.argv[0],
+	[ require.resolve('./run-daemon.js') ],
+	  opts
+	)
 
 	child.unref()
 

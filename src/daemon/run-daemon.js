@@ -15,6 +15,7 @@ var socketUp = require('../util/socket-up')
 
 if (! daemon.is())
 {
+	// eslint-disable-next-line max-len
 	console.error('must be started in daemon environment (workerpath and sockpath must be present)')
 	process.exit(-1)
 }

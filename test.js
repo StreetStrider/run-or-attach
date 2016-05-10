@@ -1,5 +1,7 @@
 
 require('console-ultimate/global').replace()
+
+// eslint-disable-next-line id-length
 process.env.RUN_OR_ATTACH_DEBUG = true
 
 
