@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 
 var json = module.exports = {}
 
