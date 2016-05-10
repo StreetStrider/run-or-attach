@@ -14,6 +14,11 @@
 
 	"main": "src/run-or-attach",
 
+	"scripts":
+	{
+		"st": "eslint src/ test.js worker.js test-worker.js"
+	},
+
 	"engines":
 	{
 		"node": ">=4"
@@ -21,6 +26,10 @@
 
 	"devDependencies":
 	{
-		"console-ultimate": "^2.8.0"
+		"js-outlander":
+			"StrangeTransistor/js-outlander#2.0.3",
+
+		"console-ultimate":
+			"^2.8.0"
 	}
 }
