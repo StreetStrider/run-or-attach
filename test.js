@@ -5,7 +5,7 @@ require('console-ultimate/global').replace()
 process.env.RUN_OR_ATTACH_DEBUG = true
 
 
-var attach = require('./src/run-or-attach')
+var attach = require('./')
 
 attach('/tmp/sock', require.resolve('./test-worker'))
 .then((flow) =>
