@@ -16,6 +16,7 @@
 
 	"scripts":
 	{
+		"test": "mocha",
 		"st": "eslint src/ test.js worker.js test-worker.js"
 	},
 
@@ -26,6 +27,15 @@
 
 	"devDependencies":
 	{
+		"mocha":
+			"^2.4",
+
+		"chai":
+			"^3.5",
+
+		"fs-sync":
+			"^1.0.2",
+
 		"js-outlander":
 			"StrangeTransistor/js-outlander#2.0.6",
 
