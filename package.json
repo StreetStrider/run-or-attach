@@ -27,6 +27,9 @@
 		"chai":
 			"^3.5",
 
+		"fs-sync":
+			"^1.0.2",
+
 		"console-ultimate":
 			"^2.8.0"
 	}
