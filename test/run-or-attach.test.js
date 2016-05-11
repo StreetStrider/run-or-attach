@@ -3,6 +3,7 @@ var fs = require('fs-sync')
 var expect = require('chai').expect
 
 var sockpath = '/tmp/run-or-attach-test'
+var workerpath = require.resolve('./worker.test')
 
 var attach = require('../')
 
@@ -26,8 +27,18 @@ describe('run-or-attach', () =>
 
 	it('works', () =>
 	{
+		return attach(sockpath, workerpath)
+		.then((flow) =>
+		{
+			expect(fs.exists(sockpath)).true
 
-		return attach(sockpath, require.resolve('./worker.test'))
+			return flow
+		})
+		.then(() =>
+		{
+			// re-attach
+			return attach(sockpath, workerpath)
+		})
 		.then((flow) =>
 		{
 			flow([ 'quit' ])
@@ -38,6 +49,11 @@ describe('run-or-attach', () =>
 		.then(() =>
 		{
 			expect(fs.exists(sockpath)).false
+		})
+		.then(() =>
+		{
+			// attach after stopped
+			return attach(sockpath, workerpath)
 		})
 	})
 
