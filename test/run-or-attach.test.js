@@ -91,6 +91,33 @@ describe('run-or-attach', () =>
 		})
 	})
 
+	it('works by requests', () =>
+	{
+		return attach(sockpath, workerpath)
+		.then((flow) =>
+		{
+			return flow.request([ 'plus', 13, 17 ])
+			.then(data =>
+			{
+				expect(data[0]).equal('plus-r')
+				expect(data[1]).equal(30)
+
+				return flow
+			})
+		})
+		.then(flow =>
+		{
+			return flow.request([ 'sqr', 5 ])
+			.then(data =>
+			{
+				expect(data[0]).equal('sqr-r')
+				expect(data[1]).equal(25)
+
+				return flow
+			})
+		})
+	})
+
 	after(() =>
 	{
 		fs.remove(sockpath)
