@@ -3,12 +3,12 @@ var Worker = require('../worker')
 
 var worker = module.exports = Worker()
 
-worker.init = function ()
+worker.init = () =>
 {
 	process.title = 'test-run-or-attach'
 }
 
-worker.recv = function (data)
+worker.recv = (data) =>
 {
 	switch (data[0])
 	{
