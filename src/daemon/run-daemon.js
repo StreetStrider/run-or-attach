@@ -36,29 +36,38 @@ catch (e)
 var sockpath = process.env.RUN_OR_ATTACH_SOCKPATH
 
 
-server()
-.listen(sockpath)
-.on('connection', (socket) =>
+/* this promise is for testing */
+/*
+   in actual scenario this file is called by node in spawn,
+   so no return value captured
+*/
+module.exports = new Promise((rs, rj) =>
 {
-	socket = socketUp(socket)
-
-	Flow(socket, worker)
-})
-.on('listening', (error) =>
-{
-	if (error) return
-
-	worker.init()
-
-	// process.on('SIGINT', teardown)
-	process.on('SIGINT', process.exit)
-	process.on('exit', teardown)
-
-	function teardown ()
+	server()
+	.listen(sockpath)
+	.on('connection', (socket) =>
 	{
-		rm(sockpath)
-		worker.down()
-	}
+		socket = socketUp(socket)
 
-	//process.send('RUN_OR_ATTACH_READY')
+		Flow(socket, worker)
+	})
+	.on('listening', (error) =>
+	{
+		if (error) return
+
+		worker.init()
+
+		// process.on('SIGINT', teardown)
+		process.on('SIGINT', process.exit)
+		process.on('exit', teardown)
+
+		function teardown ()
+		{
+			rm(sockpath)
+			worker.down()
+		}
+
+		rs()
+	})
+	.on('error', rj)
 })

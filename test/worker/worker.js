@@ -21,5 +21,7 @@ describe('worker', () =>
 		{
 			process.title = 'test-run-or-attach'
 		}
+
+		return global.run
 	})
 })
