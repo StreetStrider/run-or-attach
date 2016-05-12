@@ -18,3 +18,13 @@ console.log(module.parent && module.parent.filename)
 
 attach(sockpath)
 .then(console.log, console.error)
+.then(() => console.log('OK'))
+.then(() =>
+{
+	//setTimeout(process.exit, 1500)
+	return new Promise(rs =>
+	{
+		w.end(rs)
+	})
+})
+.then(process.exit)
