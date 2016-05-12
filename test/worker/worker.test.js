@@ -20,9 +20,9 @@ var opts =
 	}
 }
 
-run
-.then(() =>
+run.then(() =>
 {
+	console.log(1)
 	spawn(node, [ require.resolve('./caller.js') ], opts)
 	//.on('error', console.error)
 })
