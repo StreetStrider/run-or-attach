@@ -1,6 +1,6 @@
 {
 	"name":    "run-or-attach",
-	"version": "0.4.1",
+	"version": "0.4.2-pre",
 	"description": "kickstart Node.js daemon on first demand and attach to it",
 
 	"author":  "StreetStrider <teamfortresslife@gmail.com>",
@@ -16,7 +16,9 @@
 
 	"scripts":
 	{
-		"test": "mocha",
+		"test":  "mocha",
+		"cover": "istanbul cover _mocha",
+
 		"st": "eslint src/ test/ worker.js"
 	},
 
@@ -32,6 +34,9 @@
 
 		"chai":
 			"^3.5",
+
+		"istanbul":
+			"^0.4",
 
 		"fs-sync":
 			"^1.0.2",
