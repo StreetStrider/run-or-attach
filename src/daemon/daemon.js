@@ -1,9 +1,10 @@
 
 var spawn = require('child_process').spawn
-var which = require('../which')
 
 var check = require('../check')
 var noent = require('../util/noent')
+
+var which = require('../util/which')
 
 var daemon = module.exports = function daemon (sockpath, workerpath)
 {

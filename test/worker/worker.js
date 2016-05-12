@@ -1,8 +1,8 @@
 
 var expect = require('chai').expect
-
 var spawn = require('child_process').spawn
-var which = require('../../src/which')
+
+var which = require('../../src/util/which')
 
 var node = which(process.argv[0]) /* istanbul */
 var opts =
