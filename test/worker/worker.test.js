@@ -8,7 +8,7 @@ global.run = require('../../src/daemon/run-daemon')
 
 
 var spawn = require('child_process').spawn
-var which = require('which').sync
+var which = require('../../src/which')
 
 var node = which(process.argv[0]) /* istanbul */
 var opts =

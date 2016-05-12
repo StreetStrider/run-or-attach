@@ -1,6 +1,6 @@
 
 var spawn = require('child_process').spawn
-var which = require('which').sync
+var which = require('../which')
 
 var check = require('../check')
 var noent = require('../util/noent')
