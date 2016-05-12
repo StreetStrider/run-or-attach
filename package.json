@@ -17,7 +17,7 @@
 	"scripts":
 	{
 		"test": "mocha",
-		"st": "eslint src/ test.js worker.js test-worker.js"
+		"st": "eslint src/ test/ worker.js"
 	},
 
 	"engines":
