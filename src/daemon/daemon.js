@@ -1,11 +1,14 @@
 
 var spawn = require('child_process').spawn
+var which = require('which').sync
 
 var check = require('../check')
 var noent = require('../util/noent')
 
 var daemon = module.exports = function daemon (sockpath, workerpath)
 {
+	var node = which(process.argv[0]) /* istanbul */
+
 	var opts =
 	{
 		// stdio: !! process.env.RUN_OR_ATTACH_DEBUG ? 'inherit' : 'ignore',
@@ -22,7 +25,7 @@ var daemon = module.exports = function daemon (sockpath, workerpath)
 	}
 
 	var child = spawn(
-	  process.argv[0],
+	  node,
 	[ require.resolve('./run-daemon.js') ],
 	  opts
 	)

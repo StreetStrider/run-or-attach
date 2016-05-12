@@ -8,7 +8,9 @@ global.run = require('../../src/daemon/run-daemon')
 
 
 var spawn = require('child_process').spawn
+var which = require('which').sync
 
+var node = which(process.argv[0]) /* istanbul */
 var opts =
 {
 	// stdio: 'ignore',
@@ -18,4 +20,4 @@ var opts =
 	}
 }
 
-spawn(process.argv[0], [ require.resolve('./caller.js') ], opts)
+spawn(node, [ require.resolve('./caller.js') ], opts)
