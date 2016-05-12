@@ -5,11 +5,11 @@ var expect = require('chai').expect
 var sockpath = '/tmp/run-or-attach-test'
 var workerpath = require.resolve('./worker')
 
-var util = require('./_util')
+var util = require('../_util')
 var delay = util.delay
 var waitfor = util.waitfor
 
-var attach = require('../')
+var attach = require('../../')
 
 describe('run-or-attach', () =>
 {

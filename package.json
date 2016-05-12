@@ -16,8 +16,8 @@
 
 	"scripts":
 	{
-		"test":  "mocha",
-		"cover": "istanbul cover _mocha",
+		"test":  "mocha --recursive test/",
+		"cover": "istanbul cover _mocha -- --recursive test/",
 
 		"st": "eslint src/ test/ worker.js"
 	},

@@ -1,7 +1,7 @@
 
-var Worker = require('../worker')
+var Worker = require('../../worker')
 
-var delay = require('./_util').delay
+var delay = require('../_util').delay
 
 
 var worker = module.exports = Worker()
