@@ -4,7 +4,7 @@ var env = process.env
 env.RUN_OR_ATTACH_WORKERPATH = require.resolve('./worker')
 env.RUN_OR_ATTACH_SOCKPATH   = '/tmp/run-or-attach-worker-test'
 
-global.run = require('../../src/daemon/run-daemon')
+var run = global.run = require('../../src/daemon/run-daemon')
 
 
 var spawn = require('child_process').spawn
@@ -20,4 +20,9 @@ var opts =
 	}
 }
 
-spawn(node, [ require.resolve('./caller.js') ], opts)
+run
+.then(() =>
+{
+	spawn(node, [ require.resolve('./caller.js') ], opts)
+	//.on('error', console.error)
+})

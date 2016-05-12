@@ -25,15 +25,23 @@ describe('worker', () =>
 			process.title = 'test-run-or-attach'
 		}
 
-		worker.conn = (flow) =>
+		return new Promise(rs =>
 		{
-			expect(flow).an('object')
+			worker.conn = (flow) =>
+			{
+				expect(flow).an('function')
 
-			expect(flow.recv).a('function')
-			expect(flow.request).a('function')
-			expect(flow.socket).an('object')
-		}
+				// expect(flow.recv).a('function')
+				expect(flow.request).a('function')
+				expect(flow.socket).an('object')
 
-		return global.run
+				rs()
+			}
+		})
+	})
+
+	it('dscn()', () =>
+	{
+
 	})
 })
