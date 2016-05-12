@@ -21,7 +21,6 @@ attach(sockpath)
 .then(() => console.log('OK'))
 .then(() =>
 {
-	//setTimeout(process.exit, 1500)
 	return new Promise(rs =>
 	{
 		w.end(rs)

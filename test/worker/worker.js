@@ -58,10 +58,9 @@ describe('worker', () =>
 				return new Promise((rs, rj) =>
 				{
 					spawn(node, [ require.resolve('./caller.js') ], opts)
-					.on('error', rj)
 					.on('exit', rs)
+					.on('error', rj)
 				})
-				.then(console.log, console.error)
 			})
 		})
 	})
