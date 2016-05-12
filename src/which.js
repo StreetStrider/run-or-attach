@@ -1,9 +1,9 @@
 
-try
+if (process.env.running_under_istanbul)
 {
 	module.exports = require('which').sync
 }
-catch (e)
+else
 {
 	module.exports = (it) => it
 }
