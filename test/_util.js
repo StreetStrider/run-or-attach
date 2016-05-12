@@ -1,21 +1,6 @@
 
 var util = module.exports = {}
 
-var timeout = util.timeout = function timeout (promise)
-{
-	return Promise.race(
-	[
-		promise,
-		new Promise((rs, rj) => { setTimeout(() => rj(new Error('timeout')), 1.5 * 1000) })
-	])
-}
-
-util.delay = function delay ()
-{
-	return new Promise(rs => setTimeout(() => rs(), 0.25 * 1000))
-}
-
-
 util.waitfor = function waitfor (token, flow)
 {
 	var prev_recv = flow.recv
@@ -54,4 +39,19 @@ util.waitfor = function waitfor (token, flow)
 	})
 
 	return r
+}
+
+var timeout = util.timeout = function timeout (promise)
+{
+	return Promise.race(
+	[
+		promise,
+		delay(1.5 * 1000).then(() => { throw new Error('timeout') })
+	])
+}
+
+var delay = util.delay = function delay (ms)
+{
+	ms || (ms = 0.25 * 1000)
+	return new Promise(rs => setTimeout(() => rs(), ms))
 }
