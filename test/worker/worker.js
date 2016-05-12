@@ -14,8 +14,23 @@ var opts =
 	}
 }
 
+var _test = {}
+
 var Worker = require('../../worker')
 var worker = module.exports = Worker()
+
+worker.init = () =>
+{
+	process.title = 'test-run-or-attach'
+
+	_test.init = true
+}
+
+/* cannot be tested */
+/*worker.down = () =>
+{
+	_test.down = true
+}*/
 
 describe('worker', () =>
 {
@@ -31,13 +46,8 @@ describe('worker', () =>
 		.forEach(it => expect(worker[it]).a('function'))
 	})
 
-	it('conn() provides Flow interface', () =>
+	it('works', () =>
 	{
-		worker.init = () =>
-		{
-			process.title = 'test-run-or-attach'
-		}
-
 		return new Promise(rs =>
 		{
 			worker.conn = (flow) =>
@@ -47,6 +57,13 @@ describe('worker', () =>
 				// expect(flow.recv).a('function')
 				expect(flow.request).a('function')
 				expect(flow.socket).an('object')
+
+				_test.conn = true
+			}
+
+			worker.dscn = () =>
+			{
+				_test.dscn = true
 			}
 
 			rs()
@@ -63,10 +80,13 @@ describe('worker', () =>
 				})
 			})
 		})
-	})
+		.then(() =>
+		{
+			expect(_test.init).true
+			// expect(_test.down).true /* cannot be tested */
 
-	it('dscn()', () =>
-	{
-
+			expect(_test.conn).true
+			expect(_test.dscn).true
+		})
 	})
 })
