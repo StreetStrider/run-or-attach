@@ -1,11 +1,35 @@
 
 var Worker = require('../worker')
 
+var delay = require('./_util').delay
+
+
 var worker = module.exports = Worker()
 
 worker.init = () =>
 {
 	process.title = 'test-run-or-attach'
+}
+
+worker.conn = (flow) =>
+{
+	var seq = [ 1, 2, 3, 4, 5 ]
+
+	delay().then(loop)
+
+	function loop ()
+	{
+		if (seq.length)
+		{
+			var head = seq[0]
+
+			flow([ head ])
+
+			seq = seq.slice(1)
+
+			delay().then(loop)
+		}
+	}
 }
 
 worker.recv = (data) =>
