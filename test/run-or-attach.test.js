@@ -3,7 +3,7 @@ var fs = require('fs-sync')
 var expect = require('chai').expect
 
 var sockpath = '/tmp/run-or-attach-test'
-var workerpath = require.resolve('./worker.test')
+var workerpath = require.resolve('./worker')
 
 var util = require('./_util')
 var delay = util.delay
