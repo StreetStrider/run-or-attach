@@ -29,6 +29,7 @@ try
 catch (e)
 {
 	console.error('worker `%s` not found', workerpath)
+	console.error(e)
 	process.exit(-2)
 }
 

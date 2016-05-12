@@ -1,6 +1,19 @@
 
 var expect = require('chai').expect
 
+var spawn = require('child_process').spawn
+var which = require('../../src/which')
+
+var node = which(process.argv[0]) /* istanbul */
+var opts =
+{
+	// stdio: 'ignore',
+	// detached: true,
+	env:
+	{
+	}
+}
+
 var Worker = require('../../worker')
 var worker = module.exports = Worker()
 
@@ -34,9 +47,18 @@ describe('worker', () =>
 				// expect(flow.recv).a('function')
 				expect(flow.request).a('function')
 				expect(flow.socket).an('object')
-
-				rs()
 			}
+
+			rs()
+		})
+		.then(() =>
+		{
+			run.then(() =>
+			{
+				console.log(1)
+				spawn(node, [ require.resolve('./caller.js') ], opts)
+				.on('error', console.error)
+			})
 		})
 	})
 
