@@ -46,7 +46,7 @@ describe('worker', () =>
 		.forEach(it => expect(worker[it]).a('function'))
 	})
 
-	it('works', () =>
+	it('connects and disconnects', () =>
 	{
 		return new Promise(rs =>
 		{
@@ -87,6 +87,43 @@ describe('worker', () =>
 
 			expect(_test.conn).true
 			expect(_test.dscn).true
+		})
+	})
+
+	it('sends and recieves', () =>
+	{
+		return new Promise(rs =>
+		{
+			_test.recv = []
+
+			worker.recv = (data) =>
+			{
+				_test.recv.push(data)
+			}
+
+			rs()
+		})
+		.then(() =>
+		{
+			return run
+		})
+		.then(() =>
+		{
+			return new Promise((rs, rj) =>
+			{
+				spawn(node, [ require.resolve('./caller.js') ], opts)
+				.on('exit', rs)
+				.on('error', rj)
+			})
+		})
+		.then(() =>
+		{
+			expect(_test.recv).eql(
+			[
+				[ 'ok', 'data1' ],
+				[ 'ok', 'data2' ],
+				[ 'ok', 'data3' ]
+			])
 		})
 	})
 })

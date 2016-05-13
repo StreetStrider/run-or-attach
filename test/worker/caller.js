@@ -17,6 +17,14 @@ console.error = (t) => { w.write('err:' + String(t) + '\n', 'utf-8') }
 console.log(module.parent && module.parent.filename)
 
 attach(sockpath)
+.then(flow =>
+{
+	flow([ 'ok', 'data1' ]) /* @@TODO promise */
+	flow([ 'ok', 'data2' ])
+	flow([ 'ok', 'data3' ])
+
+	return delay(1000)
+})
 .then(console.log, console.error)
 .then(() => console.log('OK'))
 .then(() =>
