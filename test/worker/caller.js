@@ -23,7 +23,15 @@ attach(sockpath)
 	flow([ 'ok', 'data2' ])
 	flow([ 'ok', 'data3' ])
 
-	return delay(1000)
+	flow.recv = (data) =>
+	{
+		if (data[0] === 'turn')
+		{
+			flow([ 'turn', data[1] + '_yes' ])
+		}
+	}
+
+	return delay(500)
 })
 .then(console.log, console.error)
 .then(() => console.log('OK'))

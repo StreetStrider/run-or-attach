@@ -101,7 +101,7 @@ describe('worker', () =>
 				_test.recv.push(data)
 			}
 
-			rs()
+			return rs()
 		})
 		.then(() =>
 		{
@@ -124,6 +124,35 @@ describe('worker', () =>
 				[ 'ok', 'data2' ],
 				[ 'ok', 'data3' ]
 			])
+		})
+		.then(() =>
+		{
+			_test.recv = []
+
+			worker.conn = (flow) =>
+			{
+				flow([ 'turn', 'around' ])
+			}
+
+			worker.recv = (data) =>
+			{
+				_test.recv.push(data)
+			}
+		})
+		.then(() =>
+		{
+			return new Promise((rs, rj) =>
+			{
+				spawn(node, [ require.resolve('./caller.js') ], opts)
+				.on('exit', rs)
+				.on('error', rj)
+			})
+		})
+		.then(() =>
+		{
+			var turn = _test.recv.filter(item => item[0] === 'turn')[0]
+
+			expect(turn[1]).equal('around_yes')
 		})
 	})
 })
