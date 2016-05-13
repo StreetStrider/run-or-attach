@@ -5,7 +5,6 @@ var attach = require('../../src/attach')
 
 var util = require('../_util')
 var delay = util.delay
-var waitfor = util.waitfor
 
 var write = require('fs').createWriteStream
 var w = write(__dirname + '/../../output.txt')

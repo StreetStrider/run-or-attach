@@ -34,7 +34,6 @@ describe('run-or-attach', () =>
 		return attach(sockpath, workerpath)
 		.then((flow) =>
 		{
-			// eslint-disable-next-line no-unused-expressions
 			expect(fs.exists(sockpath)).true
 
 			return flow
@@ -53,7 +52,6 @@ describe('run-or-attach', () =>
 		.then(delay)
 		.then(() =>
 		{
-			// eslint-disable-next-line no-unused-expressions
 			expect(fs.exists(sockpath)).false
 		})
 		.then(() =>

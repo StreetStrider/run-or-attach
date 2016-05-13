@@ -8,6 +8,7 @@ module.exports =
 
 	rules:
 	{
-		'max-nested-callbacks': [ 1, 4 ]
+		'max-nested-callbacks': [ 1, 4 ],
+		'no-unused-expressions': [ 0 ]
 	}
 }

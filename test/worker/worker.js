@@ -14,6 +14,7 @@ var opts =
 	}
 }
 
+// eslint-disable-next-line no-underscore-dangle
 var _test = {}
 
 var Worker = require('../../worker')
@@ -70,6 +71,7 @@ describe('worker', () =>
 		})
 		.then(() =>
 		{
+			/* global run */
 			return run.then(() =>
 			{
 				return new Promise((rs, rj) =>
