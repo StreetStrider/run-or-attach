@@ -9,6 +9,7 @@ module.exports =
 	rules:
 	{
 		'max-nested-callbacks': [ 1, 4 ],
-		'no-unused-expressions': [ 0 ]
+		'no-unused-expressions': [ 0 ],
+		'id-length': [ 0 ]
 	}
 }

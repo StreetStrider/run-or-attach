@@ -52,5 +52,8 @@ worker.recv = (data) =>
 			}
 			, 100)
 		})
+
+	default:
+		return Promise.reject(new Error)
 	}
 }
