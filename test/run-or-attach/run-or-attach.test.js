@@ -6,6 +6,7 @@ var sockpath = '/tmp/run-or-attach-test'
 var workerpath = require.resolve('./worker')
 
 var attach = require('../../')
+var attach_dry = require('../../src/attach')
 
 var util = require('../_util')
 var waitfor = util.waitfor
@@ -41,6 +42,11 @@ describe('run-or-attach', () =>
 		{
 			// re-attach
 			return attach(sockpath, workerpath)
+		})
+		.then(() =>
+		{
+			// dry re-attach
+			return attach_dry(sockpath)
 		})
 		.then((flow) =>
 		{
