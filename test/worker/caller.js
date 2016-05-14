@@ -3,9 +3,6 @@ var sockpath = '/tmp/run-or-attach-worker-test'
 
 var attach = require('../../src/attach')
 
-var util = require('../_util')
-var delay = util.delay
-
 var write = require('fs').createWriteStream
 var w = write(__dirname + '/../../output.txt')
 // process.stdout.pipe(w)
@@ -18,10 +15,6 @@ console.log(module.parent && module.parent.filename)
 attach(sockpath)
 .then(flow =>
 {
-	flow([ 'ok', 'data1' ]) /* @@TODO promise */
-	flow([ 'ok', 'data2' ])
-	flow([ 'ok', 'data3' ])
-
 	flow.recv = (data) =>
 	{
 		if (data[0] === 'turn')
@@ -30,7 +23,19 @@ attach(sockpath)
 		}
 	}
 
-	return delay(500)
+	return Promise.resolve()
+	.then(() =>
+	{
+		return flow([ 'ok', 'data1' ])
+	})
+	.then(() =>
+	{
+		return flow([ 'ok', 'data2' ])
+	})
+	.then(() =>
+	{
+		return flow([ 'ok', 'data3' ])
+	})
 })
 .then(console.log, console.error)
 .then(() => console.log('OK'))
