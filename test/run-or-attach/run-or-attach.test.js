@@ -64,6 +64,10 @@ describe('run-or-attach', () =>
 			flow([ 'quit' ])
 
 			return waitfor('quit', flow)
+			.then(() =>
+			{
+				flow.socket.end()
+			})
 		})
 	})
 
