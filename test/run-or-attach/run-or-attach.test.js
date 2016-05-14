@@ -8,7 +8,6 @@ var workerpath = require.resolve('./worker')
 var attach = require('../../')
 
 var util = require('../_util')
-var delay = util.delay
 var waitfor = util.waitfor
 
 describe('run-or-attach', () =>
@@ -49,7 +48,6 @@ describe('run-or-attach', () =>
 
 			return waitfor('quit', flow)
 		})
-		.then(delay)
 		.then(() =>
 		{
 			expect(fs.exists(sockpath)).false
