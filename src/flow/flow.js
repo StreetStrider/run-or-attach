@@ -75,7 +75,7 @@ function Handler (flow, send, takebacks, isServer)
 			}
 			else
 			{
-				flowRecv(flow, send, takebacks, str)
+				received(flow, send, takebacks, str)
 			}
 		}
 	}
@@ -83,12 +83,12 @@ function Handler (flow, send, takebacks, isServer)
 	{
 		return (str) =>
 		{
-			flowRecv(flow, send, takebacks, str)
+			received(flow, send, takebacks, str)
 		}
 	}
 }
 
-function flowRecv (flow, send, takebacks, str)
+function received (flow, send, takebacks, str)
 {
 	if (! str)
 	{
@@ -104,32 +104,43 @@ function flowRecv (flow, send, takebacks, str)
 
 	if ('rid' in packet)
 	{
-		var rid = packet.rid
-
-		if (rid in takebacks)
-		{
-			takebacks[rid](packet.data)
-		}
+		return received_rid(packet, takebacks)
 	}
 	else if (typeof flow.recv === 'function')
 	{
-		var result = flow.recv(packet.data)
-
-		if (result)
-		{
-			resolve(result).then(result =>
-			{
-				var result__packet = { data: result }
-				if ('id' in packet)
-				{
-					result__packet.rid = packet.id
-				}
-				send(result__packet)
-			})
-		}
+		return received_ordinary(packet, flow.recv, send)
 	}
 }
 
+function received_rid (packet, takebacks)
+{
+	var rid = packet.rid
+
+	if (rid in takebacks)
+	{
+		takebacks[rid](packet.data)
+	}
+}
+
+function received_ordinary (packet, recv, send)
+{
+	var result = recv(packet.data)
+
+	if (result)
+	{
+		resolve(result).then(result =>
+		{
+			var result__packet = { data: result }
+
+			if ('id' in packet)
+			{
+				result__packet.rid = packet.id
+			}
+
+			send(result__packet)
+		})
+	}
+}
 
 function resolve (value)
 {
