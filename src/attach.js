@@ -16,13 +16,13 @@ module.exports = function attach (socket)
 				socket = socketUp(socket)
 				ok(socket)
 			})
+
+			socket.once('error', rj)
 		}
 		else
 		{
 			ok(socket)
 		}
-
-		socket.once('error', rj)
 
 		function ok (socket)
 		{
