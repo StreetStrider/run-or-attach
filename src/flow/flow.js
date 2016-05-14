@@ -11,14 +11,23 @@ module.exports = function Flow (socket, worker)
 	{
 		var packet = { data: data }
 
-		setTimeout(() => send(packet), 0)
+		return send(packet)
 	}
 
 	function send (packet)
 	{
 		if (! finalized)
 		{
-			socket.write(dump(packet))
+			return new Promise(rs =>
+			{
+				packet = dump(packet)
+
+				socket.write(packet, rs)
+			})
+		}
+		else
+		{
+			return Promise.reject(new Error('already finalized'))
 		}
 	}
 
