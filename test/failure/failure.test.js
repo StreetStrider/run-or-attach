@@ -31,8 +31,10 @@ describe('errors', () =>
 		})
 	})
 
-	it('timeout NOT_UP_DAEMON', () =>
+	it('timeout NOT_UP_DAEMON', function ()
 	{
+		this.timeout(3500)
+
 		return attach(sockpath_dangle)
 		.then(fail, error =>
 		{
