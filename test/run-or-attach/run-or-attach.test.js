@@ -10,6 +10,7 @@ var attach_dry = require('../../src/attach')
 
 var util = require('../_util')
 var waitfor = util.waitfor
+var delay = util.delay
 
 describe('run-or-attach', () =>
 {
@@ -53,6 +54,10 @@ describe('run-or-attach', () =>
 			flow([ 'quit' ])
 
 			return waitfor('quit', flow)
+		})
+		.then(() =>
+		{
+			return delay(100)
 		})
 		.then(() =>
 		{
