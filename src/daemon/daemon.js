@@ -42,7 +42,7 @@ var daemon = module.exports = function daemon (sockpath, workerpath)
 		if (n === 10)
 		{
 			var error = new Error('timeout NOT_UP_DAEMON')
-
+			error.code = 'NOT_UP_DAEMON'
 			error.address = sockpath
 
 			return Promise.reject(error)

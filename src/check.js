@@ -38,6 +38,7 @@ module.exports = function check (sockpath)
 
 					var error = new Error('connect NOT_YUP')
 					error.code = 'NOT_YUP'
+					error.address = sockpath
 
 					socket.end()
 

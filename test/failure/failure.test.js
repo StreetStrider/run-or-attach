@@ -14,7 +14,11 @@ describe('errors', () =>
 	before(() =>
 	{
 		fs.write(sockpath_refuse)
-		socket().listen(sockpath_dangle)
+
+		return new Promise(rs =>
+		{
+			socket().listen(sockpath_dangle, rs)
+		})
 	})
 
 	it('connect ECONNREFUSED', () =>
@@ -40,7 +44,8 @@ describe('errors', () =>
 		{
 			expect(error).instanceof(Error)
 
-			expect(error.message).equal('timeout NOT_UP_DAEMON')
+			expect(error.message).equal('connect NOT_YUP')
+			expect(error.code).equal('NOT_YUP')
 			expect(error.address).equal(sockpath_dangle)
 		})
 	})
