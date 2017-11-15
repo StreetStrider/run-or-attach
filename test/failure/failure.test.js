@@ -14,7 +14,7 @@ describe('errors', () =>
 	before(() =>
 	{
 		fs.write(sockpath_refuse)
-		socket(sockpath_dangle)
+		socket().listen(sockpath_dangle)
 	})
 
 	it('connect ECONNREFUSED', () =>
