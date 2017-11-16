@@ -6,12 +6,14 @@ var attach = require('../../src/attach')
 var delay = require('../_util').delay
 
 
-// var write = require('fs').createWriteStream
-// var w = write(__dirname + '/../../output.txt')
-// process.stdout.pipe(w)
+/*
+var write = require('fs').createWriteStream
+var w = write(__dirname + '/../../output.txt')
+process.stdout.pipe(w)
 
 console.log   = (t) => { w.write('log:' + String(t) + '\n', 'utf-8') }
 console.error = (t) => { w.write('err:' + String(t) + '\n', 'utf-8') }
+*/
 
 // console.log(module.parent && module.parent.filename)
 
@@ -42,14 +44,15 @@ attach(sockpath)
 })
 // .then(console.log, console.error)
 // .then(() => console.log('OK'))
-/*.then(() =>
+/*
+.then(() =>
 {
 	return new Promise(rs =>
 	{
 		w.end(rs)
 	})
 })
-*/
+//*/
 .then(() =>
 {
 	return delay(100)
