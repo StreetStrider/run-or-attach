@@ -16,10 +16,12 @@
 
 	"scripts":
 	{
-		"test":                  "mocha    --recursive test/*/*.test.js",
+		"st": "eslint src/ test/ worker.js",
+
+		"unit":                  "mocha    --recursive test/*/*.test.js",
 		"cover": "istanbul cover _mocha -- --recursive test/*/*.test.js",
 
-		"st": "eslint src/ test/ worker.js"
+		"test": "npm run st && npm run unit"
 	},
 
 	"engines":
@@ -29,6 +31,13 @@
 
 	"devDependencies":
 	{
+		"eslint":
+			"4",
+
+		"js-outlander":
+			"StrangeTransistor/js-outlander#2.2.0",
+
+
 		"mocha":
 			"^2.4",
 
@@ -38,14 +47,13 @@
 		"istanbul":
 			"^0.4",
 
+
 		"which":
 			"^1.2",
 
 		"fs-sync":
 			"^1.0.2",
 
-		"js-outlander":
-			"StrangeTransistor/js-outlander#2.0.6",
 
 		"console-ultimate":
 			"2.9"
